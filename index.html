@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!-- index.html: the STRUCTURE of the page. Browsers read this file first. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Makes the page scale correctly on phones (mobile-first) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fuego Cape Tacos | Demo Website</title>
+  <meta name="description" content="A fictional Cape Town taco food truck website built as a learning demo.">
+  <!-- Links the CSS file. The filename must match exactly. -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- "defer" = load the script without slowing the page down -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Accessibility: lets keyboard users jump past the menu -->
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== HEADER & NAVIGATION ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Fuego Cape Tacos home">
+        <span class="logo-dot" aria-hidden="true"></span>
+        Fuego Cape Tacos
+      </a>
+
+      <!-- Menu button: only visible on small screens -->
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
+        <span class="visually-hidden">Toggle menu</span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+        <span class="bar" aria-hidden="true"></span>
+      </button>
+
+      <nav id="siteNav" class="site-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#find-us">Find the truck</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Street tacos, Cape Town style</p>
+          <h1>Fresh tacos, fired up on four wheels</h1>
+          <p>Slow-cooked beef, crispy hake and loaded veg tacos, served hot from our truck.</p>
+          <!-- script.js fills this in with "Open now" or "Closed" -->
+          <p id="openStatus" class="status-badge" role="status">Checking today's hours…</p>
+          <a class="btn" href="#menu">See the menu</a>
+        </div>
+
+        <!-- Truck drawn only with CSS shapes (no copyrighted images) -->
+        <div class="hero-art" role="img" aria-label="Illustration of a red taco food truck">
+          <div class="truck">
+            <span class="truck-sign" aria-hidden="true">TACOS</span>
+            <div class="truck-awning"></div>
+            <div class="truck-window"></div>
+            <div class="truck-cab"></div>
+            <div class="wheel wheel-1"></div>
+            <div class="wheel wheel-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MENU ===== -->
+    <section class="section alt" id="menu">
+      <div class="container">
+        <h2>Our menu</h2>
+        <p class="section-intro">Sample items and prices (demo only).</p>
+
+        <!-- Filter buttons: script.js shows/hides cards -->
+        <div class="filters" role="group" aria-label="Filter menu items">
+          <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" type="button" data-filter="meat" aria-pressed="false">Meat</button>
+          <button class="filter-btn" type="button" data-filter="fish" aria-pressed="false">Fish</button>
+          <button class="filter-btn" type="button" data-filter="veg" aria-pressed="false">Vegan</button>
+          <button class="filter-btn" type="button" data-filter="sides" aria-pressed="false">Sides &amp; drinks</button>
+        </div>
+        <!-- Announces the result of filtering to screen readers -->
+        <p id="filterCount" class="visually-hidden" aria-live="polite"></p>
+
+        <div class="cards" id="menuCards">
+          <article class="card" data-category="meat">
+            <div class="card-art art-beef" aria-hidden="true"></div>
+            <h3>Braai Beef Taco</h3>
+            <p>Slow-cooked beef, pickled onion, coriander and smoky chilli mayo.</p>
+            <p class="price">R55</p>
+          </article>
+          <article class="card" data-category="fish">
+            <div class="card-art art-fish" aria-hidden="true"></div>
+            <h3>Crispy Hake Taco</h3>
+            <p>Crumbed hake, red cabbage slaw and a squeeze of lime.</p>
+            <p class="price">R58</p>
+          </article>
+          <article class="card" data-category="veg">
+            <div class="card-art art-veg" aria-hidden="true"></div>
+            <h3>Roasted Veg Taco <span class="tag">Vegan</span></h3>
+            <p>Sweet potato, black beans, avocado and fresh salsa.</p>
+            <p class="price">R48</p>
+          </article>
+          <article class="card" data-category="sides">
+            <div class="card-art art-nachos" aria-hidden="true"></div>
+            <h3>Loaded Nachos</h3>
+            <p>Corn chips, beans, cheese, jalapeños and sour cream.</p>
+            <p class="price">R70</p>
+          </article>
+          <article class="card" data-category="sides">
+            <div class="card-art art-churros" aria-hidden="true"></div>
+            <h3>Cinnamon Churros</h3>
+            <p>Warm and crunchy with a chocolate dipping sauce.</p>
+            <p class="price">R40</p>
+          </article>
+          <article class="card" data-category="sides">
+            <div class="card-art art-tea" aria-hidden="true"></div>
+            <h3>Iced Rooibos Tea <span class="tag">Vegan</span></h3>
+            <p>Chilled rooibos with lemon and a hint of honey-free sweetness.</p>
+            <p class="price">R30</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WEEKLY SCHEDULE =====
+         script.js reads data-day / data-open / data-close to work out
+         "Open now" and to highlight today's row.
+         Times use 24-hour format. An empty data-open means closed. -->
+    <section class="section" id="find-us">
+      <div class="container narrow">
+        <h2>Find the truck</h2>
+        <p class="section-intro">Example weekly schedule (fictional, placeholder spots). Times are Cape Town time.</p>
+        <table class="schedule-table" id="scheduleTable">
+          <caption class="visually-hidden">Weekly truck locations and hours</caption>
+          <thead>
+            <tr><th scope="col">Day</th><th scope="col">Spot</th><th scope="col">Hours</th></tr>
+          </thead>
+          <tbody>
+            <tr data-day="1" data-open="" data-close=""><th scope="row">Monday</th><td>Resting day</td><td>Closed</td></tr>
+            <tr data-day="2" data-open="11:00" data-close="15:00"><th scope="row">Tuesday</th><td>Woodstock</td><td>11:00 – 15:00</td></tr>
+            <tr data-day="3" data-open="11:00" data-close="15:00"><th scope="row">Wednesday</th><td>Gardens</td><td>11:00 – 15:00</td></tr>
+            <tr data-day="4" data-open="11:00" data-close="20:00"><th scope="row">Thursday</th><td>Sea Point</td><td>11:00 – 20:00</td></tr>
+            <tr data-day="5" data-open="12:00" data-close="21:00"><th scope="row">Friday</th><td>Sea Point Promenade</td><td>12:00 – 21:00</td></tr>
+            <tr data-day="6" data-open="12:00" data-close="21:00"><th scope="row">Saturday</th><td>Camps Bay</td><td>12:00 – 21:00</td></tr>
+            <tr data-day="0" data-open="10:00" data-close="16:00"><th scope="row">Sunday</th><td>Green Point</td><td>10:00 – 16:00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="section alt" id="about">
+      <div class="container narrow">
+        <h2>About us</h2>
+        <p>
+          Fuego Cape Tacos is a fictional food truck created for this demo. We
+          imagine a small team that loves bold flavours, local ingredients and
+          good music, rolling through Cape Town's neighbourhoods every week.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="section" id="contact">
+      <div class="container narrow">
+        <h2>Catering &amp; enquiries</h2>
+        <p>Email: hello@example.com (placeholder)<br>
+           Phone: 000 000 0000 (placeholder)</p>
+
+        <!-- Demo form: it does NOT send anything. A static site has no server. -->
+        <form id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <p class="error" id="nameError" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <p class="error" id="emailError" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <p class="error" id="messageError" role="alert"></p>
+          </div>
+          <button class="btn" type="submit">Send message</button>
+          <p id="formStatus" class="form-status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Fuego Cape Tacos. Fictional demo project. Not a real business.</p>
+    </div>
+  </footer>
+</body>
+</html>

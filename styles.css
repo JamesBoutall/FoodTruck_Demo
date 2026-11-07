@@ -1,0 +1,263 @@
+/* styles.css: the APPEARANCE of the page.
+   Mobile-first: base styles are for phones; @media rules at the
+   bottom add changes for larger screens. */
+
+/* ===== 1. Design tokens (change colours here and it updates everywhere) ===== */
+:root {
+  --cream: #fff6e5;
+  --sand: #fde8c4;
+  --charcoal: #2b1b17;
+  --charcoal-light: #5a4038;
+  --red: #c8321e;
+  --red-dark: #a32614;      /* dark enough for white text */
+  --yellow: #f6b400;
+  --lime: #6fa312;
+  --white: #ffffff;
+  --radius: 14px;
+  --shadow: 0 6px 18px rgba(43, 27, 23, 0.14);
+}
+
+/* ===== 2. Reset & base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* no downloads = fast */
+  line-height: 1.6;
+  color: var(--charcoal);
+  background: var(--cream);
+}
+
+h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.6rem; }
+a { color: var(--red-dark); }
+
+/* The "hidden" attribute must always win (used by the menu filter) */
+[hidden] { display: none !important; }
+
+/* Centres content and adds side padding */
+.container { width: min(100% - 2rem, 1050px); margin-inline: auto; }
+.narrow { width: min(100% - 2rem, 700px); }
+
+/* ===== 3. Accessibility helpers ===== */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.skip-link {
+  position: absolute; left: 0.5rem; top: -4rem;
+  background: var(--charcoal); color: var(--white);
+  padding: 0.6rem 1rem; border-radius: 0 0 8px 8px; z-index: 100;
+}
+.skip-link:focus { top: 0; }
+
+/* Clear focus ring for keyboard users */
+:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+/* ===== 4. Header & navigation (mobile first) ===== */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--charcoal);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 60px; position: relative;
+}
+.logo {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-weight: 800; font-size: 1.1rem;
+  color: var(--white); text-decoration: none;
+}
+.logo-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 4px rgba(246, 180, 0, 0.3);
+}
+
+/* Hamburger button */
+.nav-toggle {
+  display: flex; flex-direction: column; gap: 5px;
+  background: none; border: 0; padding: 0.7rem; cursor: pointer;
+}
+.bar { width: 24px; height: 3px; background: var(--white); border-radius: 2px; }
+
+/* Menu is hidden on phones until the button is pressed */
+.site-nav {
+  display: none;
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--charcoal);
+  border-top: 1px solid var(--charcoal-light);
+  box-shadow: var(--shadow);
+}
+.site-nav.open { display: block; }
+.site-nav ul { list-style: none; margin: 0; padding: 0.5rem 1rem; }
+.site-nav a {
+  display: block; padding: 0.8rem 0.5rem;
+  color: var(--white); font-weight: 600; text-decoration: none;
+}
+.site-nav a:hover { color: var(--yellow); }
+
+/* ===== 5. Buttons ===== */
+.btn {
+  display: inline-block;
+  background: var(--red-dark); color: var(--white);
+  border: 0; border-radius: 999px;
+  padding: 0.8rem 1.6rem;
+  font: inherit; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+.btn:hover { background: var(--charcoal); transform: translateY(-2px); }
+
+/* ===== 6. Hero ===== */
+.hero { background: linear-gradient(160deg, var(--sand), var(--cream)); padding: 2.5rem 0; }
+.hero-inner { display: grid; gap: 2rem; align-items: center; }
+.eyebrow {
+  text-transform: uppercase; letter-spacing: 0.12em;
+  font-size: 0.8rem; font-weight: 700; color: var(--red-dark); margin: 0 0 0.5rem;
+}
+
+/* "Open now" / "Closed" badge (colour AND text, never colour alone) */
+.status-badge {
+  display: inline-block; margin: 0.5rem 0 1.25rem;
+  padding: 0.35rem 0.9rem; border-radius: 999px;
+  font-weight: 700; font-size: 0.95rem;
+  background: var(--white); border: 2px solid var(--charcoal-light);
+}
+.status-badge.open   { border-color: var(--lime); }
+.status-badge.closed { border-color: var(--red-dark); }
+.status-badge::before { content: "● "; }
+.status-badge.open::before   { color: var(--lime); }
+.status-badge.closed::before { color: var(--red-dark); }
+
+/* The food truck is built only from CSS shapes */
+.hero-art { height: 220px; display: grid; place-items: center; }
+.truck {
+  position: relative; width: 220px; height: 110px;
+  background: var(--red); border-radius: 14px 14px 6px 6px;
+  box-shadow: var(--shadow);
+  margin-right: 50px;              /* leaves room for the cab on the right */
+  animation: bob 3s ease-in-out infinite;
+}
+.truck-sign {
+  position: absolute; left: 18px; top: 6px;
+  color: var(--white); font-weight: 900; letter-spacing: 0.15em; font-size: 0.9rem;
+}
+.truck-awning {
+  position: absolute; left: 18px; top: 30px; width: 130px; height: 16px;
+  background: repeating-linear-gradient(90deg, var(--yellow) 0 16px, var(--white) 16px 32px);
+  border-radius: 0 0 10px 10px;
+}
+.truck-window {
+  position: absolute; left: 18px; top: 46px; width: 130px; height: 40px;
+  background: var(--cream); border-radius: 0 0 6px 6px;
+}
+.truck-cab {
+  position: absolute; right: -50px; bottom: 0; width: 70px; height: 70px;
+  background: var(--red-dark); border-radius: 0 28px 6px 0;
+}
+.wheel {
+  position: absolute; bottom: -16px; width: 34px; height: 34px;
+  border-radius: 50%; background: var(--charcoal);
+  box-shadow: inset 0 0 0 7px #8a7a74;
+}
+.wheel-1 { left: 28px; }
+.wheel-2 { right: -34px; }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+/* ===== 7. Sections ===== */
+.section { padding: 3rem 0; }
+.section.alt { background: var(--sand); }
+.section-intro { margin-top: -0.25rem; color: var(--charcoal-light); }
+
+/* ===== 8. Menu filter buttons ===== */
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.filter-btn {
+  font: inherit; font-weight: 700; cursor: pointer;
+  padding: 0.5rem 1rem; border-radius: 999px;
+  background: var(--white); color: var(--charcoal);
+  border: 2px solid var(--charcoal);
+}
+.filter-btn[aria-pressed="true"] { background: var(--charcoal); color: var(--white); }
+
+/* ===== 9. Menu cards ===== */
+.cards { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
+.card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 1.25rem; box-shadow: var(--shadow);
+}
+.card h3 { margin-bottom: 0.25rem; }
+.card p { margin: 0 0 0.5rem; }
+.price { font-weight: 800; color: var(--red-dark); }
+.tag {
+  display: inline-block; vertical-align: middle;
+  font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+  background: var(--lime); color: var(--white);
+  padding: 0.1rem 0.5rem; border-radius: 999px;
+  /* darker green keeps white text readable */
+  background: #4d7a0a;
+}
+
+/* Simple CSS "pictures" for each menu item */
+.card-art { height: 110px; border-radius: 10px; margin-bottom: 1rem; }
+.art-beef   { background: radial-gradient(ellipse at 50% 60%, #7a3b1e 0 30%, #6fa312 32% 42%, #f6b400 44% 70%, #fde8c4 72%); }
+.art-fish   { background: radial-gradient(ellipse at 50% 55%, #e0a24a 0 28%, #b45bb0 30% 42%, #f6b400 44% 70%, #fde8c4 72%); }
+.art-veg    { background: radial-gradient(ellipse at 50% 55%, #e8832a 0 22%, #4d7a0a 24% 40%, #f6b400 42% 70%, #fde8c4 72%); }
+.art-nachos { background: linear-gradient(135deg, #f6b400 25%, transparent 25%) 0 0 / 40px 40px,
+                          linear-gradient(225deg, #e8832a 25%, transparent 25%) 0 0 / 40px 40px, #fde8c4; }
+.art-churros{ background: repeating-linear-gradient(60deg, #c98a3a 0 14px, #e8b35a 14px 28px); }
+.art-tea    { background: linear-gradient(#fde8c4 30%, #b8452a 30%); }
+
+/* ===== 10. Schedule table ===== */
+.schedule-table {
+  width: 100%; border-collapse: collapse; background: var(--white);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+}
+.schedule-table th, .schedule-table td { padding: 0.75rem 1rem; text-align: left; }
+.schedule-table tbody tr { border-top: 1px solid var(--sand); }
+.schedule-table thead { background: var(--charcoal); color: var(--white); }
+/* script.js adds this class to today's row */
+.schedule-table tr.today { background: #ffe9b8; font-weight: 700; }
+
+/* ===== 11. Form ===== */
+.field { margin-bottom: 1rem; }
+label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
+input, textarea {
+  width: 100%; padding: 0.7rem; font: inherit;
+  border: 2px solid var(--charcoal-light); border-radius: 8px;
+  background: var(--white); color: var(--charcoal);
+}
+input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #b00020; }
+.error { color: #b00020; font-size: 0.9rem; margin: 0.3rem 0 0; min-height: 1.2em; }
+.form-status { font-weight: 700; margin-top: 1rem; }
+
+/* ===== 12. Footer ===== */
+.site-footer { background: var(--charcoal); color: var(--cream); padding: 1.5rem 0; text-align: center; font-size: 0.9rem; }
+
+/* ===== 13. Larger screens (tablet and up) ===== */
+@media (min-width: 700px) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2rem; }
+  .hero { padding: 4.5rem 0; }
+  .hero-inner { grid-template-columns: 1.2fr 1fr; }
+  .cards { grid-template-columns: repeat(3, 1fr); }
+
+  /* Show the menu in a row; hide the hamburger button */
+  .nav-toggle { display: none; }
+  .site-nav { display: block; position: static; background: none; border: 0; box-shadow: none; }
+  .site-nav ul { display: flex; gap: 0.5rem; padding: 0; }
+  .site-nav a { padding: 0.5rem 0.8rem; }
+}
+
+/* ===== 14. Respect users who prefer less motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .truck { animation: none; }
+  .btn { transition: none; }
+}
