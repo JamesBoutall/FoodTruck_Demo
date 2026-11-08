@@ -8,9 +8,9 @@
   <title>Fuego Cape Tacos | Demo Website</title>
   <meta name="description" content="A fictional Cape Town taco food truck website built as a learning demo.">
   <!-- Links the CSS file. The filename must match exactly. -->
-  <link rel="stylesheet" href="taco.css">
+  <link rel="stylesheet" href="styles.css">
   <!-- "defer" = load the script without slowing the page down -->
-  <script src="taco.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <!-- Accessibility: lets keyboard users jump past the menu -->
@@ -75,17 +75,6 @@
       <div class="container">
         <h2>Our menu</h2>
         <p class="section-intro">Sample items and prices (demo only).</p>
- 
-        <!-- Filter buttons: script.js shows/hides cards -->
-        <div class="filters" role="group" aria-label="Filter menu items">
-          <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
-          <button class="filter-btn" type="button" data-filter="meat" aria-pressed="false">Meat</button>
-          <button class="filter-btn" type="button" data-filter="fish" aria-pressed="false">Fish</button>
-          <button class="filter-btn" type="button" data-filter="veg" aria-pressed="false">Vegan</button>
-          <button class="filter-btn" type="button" data-filter="sides" aria-pressed="false">Sides &amp; drinks</button>
-        </div>
-        <!-- Announces the result of filtering to screen readers -->
-        <p id="filterCount" class="visually-hidden" aria-live="polite"></p>
  
         <div class="cards" id="menuCards">
           <article class="card" data-category="meat">
@@ -205,4 +194,5 @@
   </footer>
 </body>
 </html>
+ 
  
