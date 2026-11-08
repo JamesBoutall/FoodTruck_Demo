@@ -183,17 +183,6 @@ main:focus { outline: none; }
 .section.alt { background: var(--sand); }
 .section-intro { margin-top: -0.25rem; color: var(--charcoal-light); }
  
-/* ===== 8. Menu filter buttons ===== */
-.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-.filter-btn {
-  font: inherit; font-weight: 700; cursor: pointer;
-  padding: 0.5rem 1rem; border-radius: 999px;
-  background: var(--white); color: var(--charcoal);
-  border: 2px solid var(--charcoal);
-}
-.filter-btn { min-height: 44px; } /* easy to tap */
-.filter-btn[aria-pressed="true"] { background: var(--charcoal); color: var(--white); }
- 
 /* ===== 9. Menu cards ===== */
 .cards { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
 .card {
@@ -268,3 +257,4 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #b0002
   .truck { animation: none; }
   .btn { transition: none; }
 }
+ 
