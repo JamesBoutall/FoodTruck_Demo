@@ -82,31 +82,6 @@ if (todayRow) {
   }
 }
  
-/* 3. Menu filter: show only the chosen category */
-const filterButtons = document.querySelectorAll('.filter-btn');
-const menuCards = document.querySelectorAll('#menuCards .card');
-const filterCount = document.getElementById('filterCount');
- 
-filterButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const chosen = button.dataset.filter;
- 
-    // Update which button looks "pressed" (and tell screen readers)
-    filterButtons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
- 
-    // Show or hide each card
-    let visible = 0;
-    menuCards.forEach((card) => {
-      // A card can belong to several categories, e.g. "sides veg"
-      const match = chosen === 'all' || card.dataset.category.split(' ').includes(chosen);
-      card.hidden = !match;
-      if (match) visible++;
-    });
- 
-    filterCount.textContent = 'Showing ' + visible + ' menu items.';
-  });
-});
- 
 /* 4. Keep the footer year up to date automatically */
 document.getElementById('year').textContent = new Date().getFullYear();
  
@@ -163,5 +138,4 @@ form.addEventListener('submit', (event) => {
   statusMessage.textContent = 'Thanks! This is a demo form, so nothing was actually sent.';
   form.reset();
 });
- 
  
