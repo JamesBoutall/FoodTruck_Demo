@@ -1,7 +1,7 @@
 /* styles.css: the APPEARANCE of the page.
    Mobile-first: base styles are for phones; @media rules at the
    bottom add changes for larger screens. */
-
+ 
 /* ===== 1. Design tokens (change colours here and it updates everywhere) ===== */
 :root {
   --cream: #fff6e5;
@@ -16,12 +16,12 @@
   --radius: 14px;
   --shadow: 0 6px 18px rgba(43, 27, 23, 0.14);
 }
-
+ 
 /* ===== 2. Reset & base ===== */
 *, *::before, *::after { box-sizing: border-box; }
-
+ 
 html { scroll-behavior: smooth; scroll-padding-top: 70px; }
-
+ 
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; /* no downloads = fast */
@@ -29,19 +29,19 @@ body {
   color: var(--charcoal);
   background: var(--cream);
 }
-
+ 
 h1, h2, h3 { line-height: 1.2; margin: 0 0 0.5em; }
 h1 { font-size: 2rem; }
 h2 { font-size: 1.6rem; }
 a { color: var(--red-dark); }
-
+ 
 /* The "hidden" attribute must always win (used by the menu filter) */
 [hidden] { display: none !important; }
-
+ 
 /* Centres content and adds side padding */
 .container { width: min(100% - 2rem, 1050px); margin-inline: auto; }
 .narrow { width: min(100% - 2rem, 700px); }
-
+ 
 /* ===== 3. Accessibility helpers ===== */
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -53,10 +53,16 @@ a { color: var(--red-dark); }
   padding: 0.6rem 1rem; border-radius: 0 0 8px 8px; z-index: 100;
 }
 .skip-link:focus { top: 0; }
-
-/* Clear focus ring for keyboard users */
-:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
-
+ 
+/* Clear focus ring for keyboard users.
+   Dark ring on light areas, yellow ring on dark areas (both pass 3:1 contrast). */
+:focus-visible { outline: 3px solid var(--charcoal); outline-offset: 3px; }
+.site-header :focus-visible,
+.site-footer :focus-visible,
+.skip-link:focus-visible { outline-color: var(--yellow); }
+/* <main> is focused by the skip link; it does not need a visible ring */
+main:focus { outline: none; }
+ 
 /* ===== 4. Header & navigation (mobile first) ===== */
 .site-header {
   position: sticky; top: 0; z-index: 50;
@@ -76,14 +82,15 @@ a { color: var(--red-dark); }
   background: var(--yellow);
   box-shadow: 0 0 0 4px rgba(246, 180, 0, 0.3);
 }
-
+ 
 /* Hamburger button */
 .nav-toggle {
   display: flex; flex-direction: column; gap: 5px;
   background: none; border: 0; padding: 0.7rem; cursor: pointer;
+  min-width: 44px; min-height: 44px; align-items: center; justify-content: center; /* easy to tap */
 }
 .bar { width: 24px; height: 3px; background: var(--white); border-radius: 2px; }
-
+ 
 /* Menu is hidden on phones until the button is pressed */
 .site-nav {
   display: none;
@@ -99,7 +106,7 @@ a { color: var(--red-dark); }
   color: var(--white); font-weight: 600; text-decoration: none;
 }
 .site-nav a:hover { color: var(--yellow); }
-
+ 
 /* ===== 5. Buttons ===== */
 .btn {
   display: inline-block;
@@ -111,7 +118,7 @@ a { color: var(--red-dark); }
   transition: transform 0.2s, background 0.2s;
 }
 .btn:hover { background: var(--charcoal); transform: translateY(-2px); }
-
+ 
 /* ===== 6. Hero ===== */
 .hero { background: linear-gradient(160deg, var(--sand), var(--cream)); padding: 2.5rem 0; }
 .hero-inner { display: grid; gap: 2rem; align-items: center; }
@@ -119,7 +126,7 @@ a { color: var(--red-dark); }
   text-transform: uppercase; letter-spacing: 0.12em;
   font-size: 0.8rem; font-weight: 700; color: var(--red-dark); margin: 0 0 0.5rem;
 }
-
+ 
 /* "Open now" / "Closed" badge (colour AND text, never colour alone) */
 .status-badge {
   display: inline-block; margin: 0.5rem 0 1.25rem;
@@ -129,10 +136,10 @@ a { color: var(--red-dark); }
 }
 .status-badge.open   { border-color: var(--lime); }
 .status-badge.closed { border-color: var(--red-dark); }
-.status-badge::before { content: "● "; }
+.status-badge::before { content: "● "; content: "● " / ""; } /* second line hides the dot from screen readers */
 .status-badge.open::before   { color: var(--lime); }
 .status-badge.closed::before { color: var(--red-dark); }
-
+ 
 /* The food truck is built only from CSS shapes */
 .hero-art { height: 220px; display: grid; place-items: center; }
 .truck {
@@ -170,12 +177,12 @@ a { color: var(--red-dark); }
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-4px); }
 }
-
+ 
 /* ===== 7. Sections ===== */
 .section { padding: 3rem 0; }
 .section.alt { background: var(--sand); }
 .section-intro { margin-top: -0.25rem; color: var(--charcoal-light); }
-
+ 
 /* ===== 8. Menu filter buttons ===== */
 .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 .filter-btn {
@@ -184,8 +191,9 @@ a { color: var(--red-dark); }
   background: var(--white); color: var(--charcoal);
   border: 2px solid var(--charcoal);
 }
+.filter-btn { min-height: 44px; } /* easy to tap */
 .filter-btn[aria-pressed="true"] { background: var(--charcoal); color: var(--white); }
-
+ 
 /* ===== 9. Menu cards ===== */
 .cards { display: grid; gap: 1.25rem; margin-top: 1.5rem; }
 .card {
@@ -198,12 +206,10 @@ a { color: var(--red-dark); }
 .tag {
   display: inline-block; vertical-align: middle;
   font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-  background: var(--lime); color: var(--white);
+  background: #4d7a0a; color: var(--white); /* dark green keeps white text readable */
   padding: 0.1rem 0.5rem; border-radius: 999px;
-  /* darker green keeps white text readable */
-  background: #4d7a0a;
 }
-
+ 
 /* Simple CSS "pictures" for each menu item */
 .card-art { height: 110px; border-radius: 10px; margin-bottom: 1rem; }
 .art-beef   { background: radial-gradient(ellipse at 50% 60%, #7a3b1e 0 30%, #6fa312 32% 42%, #f6b400 44% 70%, #fde8c4 72%); }
@@ -213,18 +219,18 @@ a { color: var(--red-dark); }
                           linear-gradient(225deg, #e8832a 25%, transparent 25%) 0 0 / 40px 40px, #fde8c4; }
 .art-churros{ background: repeating-linear-gradient(60deg, #c98a3a 0 14px, #e8b35a 14px 28px); }
 .art-tea    { background: linear-gradient(#fde8c4 30%, #b8452a 30%); }
-
+ 
 /* ===== 10. Schedule table ===== */
 .schedule-table {
   width: 100%; border-collapse: collapse; background: var(--white);
   border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
 }
-.schedule-table th, .schedule-table td { padding: 0.75rem 1rem; text-align: left; }
+.schedule-table th, .schedule-table td { padding: 0.75rem 0.6rem; text-align: left; } /* tighter on phones */
 .schedule-table tbody tr { border-top: 1px solid var(--sand); }
 .schedule-table thead { background: var(--charcoal); color: var(--white); }
 /* script.js adds this class to today's row */
 .schedule-table tr.today { background: #ffe9b8; font-weight: 700; }
-
+ 
 /* ===== 11. Form ===== */
 .field { margin-bottom: 1rem; }
 label { display: block; font-weight: 700; margin-bottom: 0.3rem; }
@@ -236,10 +242,10 @@ input, textarea {
 input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #b00020; }
 .error { color: #b00020; font-size: 0.9rem; margin: 0.3rem 0 0; min-height: 1.2em; }
 .form-status { font-weight: 700; margin-top: 1rem; }
-
+ 
 /* ===== 12. Footer ===== */
 .site-footer { background: var(--charcoal); color: var(--cream); padding: 1.5rem 0; text-align: center; font-size: 0.9rem; }
-
+ 
 /* ===== 13. Larger screens (tablet and up) ===== */
 @media (min-width: 700px) {
   h1 { font-size: 3rem; }
@@ -247,17 +253,19 @@ input[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: #b0002
   .hero { padding: 4.5rem 0; }
   .hero-inner { grid-template-columns: 1.2fr 1fr; }
   .cards { grid-template-columns: repeat(3, 1fr); }
-
+  .schedule-table th, .schedule-table td { padding: 0.75rem 1rem; }
+ 
   /* Show the menu in a row; hide the hamburger button */
   .nav-toggle { display: none; }
   .site-nav { display: block; position: static; background: none; border: 0; box-shadow: none; }
   .site-nav ul { display: flex; gap: 0.5rem; padding: 0; }
   .site-nav a { padding: 0.5rem 0.8rem; }
 }
-
+ 
 /* ===== 14. Respect users who prefer less motion ===== */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .truck { animation: none; }
   .btn { transition: none; }
 }
+ 
