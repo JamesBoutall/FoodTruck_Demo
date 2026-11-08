@@ -97,7 +97,8 @@ filterButtons.forEach((button) => {
     // Show or hide each card
     let visible = 0;
     menuCards.forEach((card) => {
-      const match = chosen === 'all' || card.dataset.category === chosen;
+      // A card can belong to several categories, e.g. "sides veg"
+      const match = chosen === 'all' || card.dataset.category.split(' ').includes(chosen);
       card.hidden = !match;
       if (match) visible++;
     });
