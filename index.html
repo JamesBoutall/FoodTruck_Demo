@@ -15,7 +15,7 @@
 <body>
   <!-- Accessibility: lets keyboard users jump past the menu -->
   <a class="skip-link" href="#main">Skip to main content</a>
-
+ 
   <!-- ===== HEADER & NAVIGATION ===== -->
   <header class="site-header">
     <div class="container header-inner">
@@ -23,7 +23,7 @@
         <span class="logo-dot" aria-hidden="true"></span>
         Fuego Cape Tacos
       </a>
-
+ 
       <!-- Menu button: only visible on small screens -->
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav">
         <span class="visually-hidden">Toggle menu</span>
@@ -31,7 +31,7 @@
         <span class="bar" aria-hidden="true"></span>
         <span class="bar" aria-hidden="true"></span>
       </button>
-
+ 
       <nav id="siteNav" class="site-nav" aria-label="Main navigation">
         <ul>
           <li><a href="#menu">Menu</a></li>
@@ -42,8 +42,8 @@
       </nav>
     </div>
   </header>
-
-  <main id="main">
+ 
+  <main id="main" tabindex="-1">
     <!-- ===== HERO ===== -->
     <section class="hero" id="top">
       <div class="container hero-inner">
@@ -55,7 +55,7 @@
           <p id="openStatus" class="status-badge" role="status">Checking today's hours…</p>
           <a class="btn" href="#menu">See the menu</a>
         </div>
-
+ 
         <!-- Truck drawn only with CSS shapes (no copyrighted images) -->
         <div class="hero-art" role="img" aria-label="Illustration of a red taco food truck">
           <div class="truck">
@@ -69,13 +69,13 @@
         </div>
       </div>
     </section>
-
+ 
     <!-- ===== MENU ===== -->
     <section class="section alt" id="menu">
       <div class="container">
         <h2>Our menu</h2>
         <p class="section-intro">Sample items and prices (demo only).</p>
-
+ 
         <!-- Filter buttons: script.js shows/hides cards -->
         <div class="filters" role="group" aria-label="Filter menu items">
           <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All</button>
@@ -86,7 +86,7 @@
         </div>
         <!-- Announces the result of filtering to screen readers -->
         <p id="filterCount" class="visually-hidden" aria-live="polite"></p>
-
+ 
         <div class="cards" id="menuCards">
           <article class="card" data-category="meat">
             <div class="card-art art-beef" aria-hidden="true"></div>
@@ -121,13 +121,13 @@
           <article class="card" data-category="sides">
             <div class="card-art art-tea" aria-hidden="true"></div>
             <h3>Iced Rooibos Tea <span class="tag">Vegan</span></h3>
-            <p>Chilled rooibos with lemon and a hint of honey-free sweetness.</p>
+            <p>Chilled rooibos with fresh lemon and a sprig of mint.</p>
             <p class="price">R30</p>
           </article>
         </div>
       </div>
     </section>
-
+ 
     <!-- ===== WEEKLY SCHEDULE =====
          script.js reads data-day / data-open / data-close to work out
          "Open now" and to highlight today's row.
@@ -153,7 +153,7 @@
         </table>
       </div>
     </section>
-
+ 
     <!-- ===== ABOUT ===== -->
     <section class="section alt" id="about">
       <div class="container narrow">
@@ -165,29 +165,29 @@
         </p>
       </div>
     </section>
-
+ 
     <!-- ===== CONTACT ===== -->
     <section class="section" id="contact">
       <div class="container narrow">
         <h2>Catering &amp; enquiries</h2>
         <p>Email: hello@example.com (placeholder)<br>
            Phone: 000 000 0000 (placeholder)</p>
-
+ 
         <!-- Demo form: it does NOT send anything. A static site has no server. -->
         <form id="contactForm" novalidate>
           <div class="field">
             <label for="name">Your name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
+            <input id="name" name="name" type="text" autocomplete="name" aria-describedby="nameError" required>
             <p class="error" id="nameError" role="alert"></p>
           </div>
           <div class="field">
             <label for="email">Your email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
+            <input id="email" name="email" type="email" autocomplete="email" aria-describedby="emailError" required>
             <p class="error" id="emailError" role="alert"></p>
           </div>
           <div class="field">
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="4" required></textarea>
+            <textarea id="message" name="message" rows="4" aria-describedby="messageError" required></textarea>
             <p class="error" id="messageError" role="alert"></p>
           </div>
           <button class="btn" type="submit">Send message</button>
@@ -196,7 +196,7 @@
       </div>
     </section>
   </main>
-
+ 
   <footer class="site-footer">
     <div class="container">
       <p>&copy; <span id="year">2026</span> Fuego Cape Tacos. Fictional demo project. Not a real business.</p>
@@ -204,3 +204,4 @@
   </footer>
 </body>
 </html>
+ 
