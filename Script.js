@@ -23,7 +23,7 @@ siteNav.querySelectorAll('a').forEach((link) => {
  
 // Close the menu with the Escape key (keyboard accessibility)
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
+  if (event.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
     setMenu(false);
     navToggle.focus();
   }
@@ -33,10 +33,19 @@ document.addEventListener('keydown', (event) => {
    We use Cape Town time, so the badge is right even if a visitor
    is in another time zone. */
  
-// Gets the current date/time as it is in Cape Town
+// Gets today's weekday (0 = Sunday ... 6 = Saturday) and the minutes since
+// midnight, as they are in Cape Town right now.
 function getCapeTownNow() {
-  const text = new Date().toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' });
-  return new Date(text);
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Africa/Johannesburg',
+    weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+  }).formatToParts(new Date());
+  const get = (type) => parts.find((p) => p.type === type).value;
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  return {
+    day: dayNames.indexOf(get('weekday')),
+    minutes: Number(get('hour')) * 60 + Number(get('minute'))
+  };
 }
  
 // Turns "11:30" into minutes since midnight (11 * 60 + 30 = 690)
@@ -46,15 +55,16 @@ function toMinutes(time) {
 }
  
 const now = getCapeTownNow();
-const todayRow = document.querySelector('#scheduleTable tr[data-day="' + now.getDay() + '"]');
+const todayRow = document.querySelector('#scheduleTable tr[data-day="' + now.day + '"]');
 const badge = document.getElementById('openStatus');
  
 if (todayRow) {
   todayRow.classList.add('today');
+  todayRow.setAttribute('aria-current', 'date'); // tells screen readers this is today
  
   const openTime = todayRow.dataset.open;   // e.g. "11:00" (empty if closed all day)
   const closeTime = todayRow.dataset.close; // e.g. "15:00"
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const nowMinutes = now.minutes;
  
   let isOpen = false;
   if (openTime && closeTime) {
@@ -152,3 +162,4 @@ form.addEventListener('submit', (event) => {
   statusMessage.textContent = 'Thanks! This is a demo form, so nothing was actually sent.';
   form.reset();
 });
+ 
